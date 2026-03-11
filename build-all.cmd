@@ -7,7 +7,6 @@ REM Modes:
 REM   build           -> Gradle build + Maven package
 REM   publish         -> Gradle plugin publish only
 REM   gradle-publish  -> Gradle plugin publish only
-REM   publish-gradle  -> Gradle plugin publish only (alias)
 REM   maven           -> Maven package only
 REM   maven-publish   -> Maven deploy only (requires MAVEN_ALT_DEPLOY_REPO)
 REM   help            -> show usage
@@ -42,7 +41,6 @@ if errorlevel 1 (
 if /I "%MODE%"=="build" goto :modeBuild
 if /I "%MODE%"=="publish" goto :modePublish
 if /I "%MODE%"=="gradle-publish" goto :modeGradlePublish
-if /I "%MODE%"=="publish-gradle" goto :modeGradlePublish
 if /I "%MODE%"=="maven" goto :modeMaven
 if /I "%MODE%"=="maven-publish" goto :modeMavenPublish
 
@@ -148,7 +146,7 @@ echo [ERROR] Maven runner not found: %MAVEN_RUN%
 exit /b 1
 
 :usage
-echo Usage: build-all.cmd [build^|publish^|gradle-publish^|publish-gradle^|maven^|maven-publish^|help]
+echo Usage: build-all.cmd [build^|publish^|gradle-publish^|maven^|maven-publish^|help]
 echo.
 echo Examples:
 echo   build-all.cmd

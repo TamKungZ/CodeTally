@@ -2,7 +2,10 @@ package me.tamkungz.codetally;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Language-agnostic source analyzer.
@@ -38,12 +41,11 @@ public class SourceAnalyzer {
 
         SourceStats stats = new SourceStats();
 
-        List<File> files = collectFiles(srcDir);
+        List<File> files = collectAnalyzableFiles(srcDir);
         files.sort(Comparator.comparing(File::getAbsolutePath));
 
         for (File file : files) {
             String ext = extension(file.getName());
-            if (!DEFAULT_EXTENSIONS.contains(ext)) continue;
 
             List<String> lines = Files.readAllLines(file.toPath());
 
@@ -83,6 +85,18 @@ public class SourceAnalyzer {
         }
 
         return stats;
+    }
+
+    /** Collect files under srcDir filtered by {@link #DEFAULT_EXTENSIONS}. */
+    public List<File> collectAnalyzableFiles(File srcDir) {
+        List<File> files = collectFiles(srcDir);
+        List<File> filtered = new ArrayList<>();
+        for (File f : files) {
+            if (DEFAULT_EXTENSIONS.contains(extension(f.getName()))) {
+                filtered.add(f);
+            }
+        }
+        return filtered;
     }
 
     // ── Helpers ──────────────────────────────────────────────────────────────

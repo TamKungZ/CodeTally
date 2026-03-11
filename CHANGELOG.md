@@ -5,15 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.1]
 
 ### Added
 - Initial [`README`](README.md) with usage for Gradle and Maven, publish instructions, and project links.
 - Project homepage metadata set to `https://dev.tamkungz.me/` in [`gradle-plugin/build.gradle`](gradle-plugin/build.gradle) and [`pom.xml`](pom.xml).
 - Maven Central publishing metadata in [`pom.xml`](pom.xml): description, url, scm, licenses, and developers.
 - Maven release artifacts configuration in [`pom.xml`](pom.xml): sources jar, javadoc jar, GPG signing, and Sonatype Central publishing plugin.
+- Linux build orchestrator script [`build-all.sh`](build-all.sh).
 
 ### Changed
+- Project version bumped from `1.0.0` to `1.0.1` in [`build.gradle`](build.gradle) and [`pom.xml`](pom.xml).
+- Documentation examples updated to `1.0.1` in [`README.md`](README.md).
+- Removed `publish-gradle` alias from [`build-all.cmd`](build-all.cmd); use `gradle-publish`.
+
 - Gradle plugin subproject now inherits coordinates from root in [`gradle-plugin/build.gradle`](gradle-plugin/build.gradle) via `group = rootProject.group` and `version = rootProject.version`.
 - Maven plugin Javadoc example in [`maven-plugin/CountLinesMojo.java`](maven-plugin/CountLinesMojo.java) updated to use `{@code ...}` for valid Javadoc generation.
 

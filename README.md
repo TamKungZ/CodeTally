@@ -23,6 +23,9 @@ Options:
 - skip blank lines
 - skip comment lines
 - verbose per-file output
+- export machine-readable report (`json`/`csv`)
+- threshold gate (`maxLines`) to fail build
+- optional git blame ownership (author -> lines)
 
 ---
 
@@ -32,7 +35,7 @@ Add plugin:
 
 ```gradle
 plugins {
-  id 'me.tamkungz.codetally' version '1.0.0'
+  id 'me.tamkungz.codetally' version '1.0.1'
 }
 ```
 
@@ -42,6 +45,30 @@ Run:
 ./gradlew countLines
 ```
 
+Configure task options:
+
+```gradle
+tasks.named('countLines', me.tamkungz.codetally.CountLinesTask) {
+  skipBlankLines = true
+  skipCommentLines = true
+  verbose = false
+
+  reportFormat = 'json' // json or csv
+  outputFile = layout.buildDirectory.file('reports/codetally/report.json')
+
+  maxLines = 50000L     // 0 = disabled
+  gitBlame = false      // true = aggregate author ownership via git blame
+}
+```
+
+Run automatically at the end of build:
+
+```gradle
+tasks.named('build') {
+  finalizedBy(tasks.named('countLines'))
+}
+```
+
 ---
 
 ## Use with Maven
@@ -49,7 +76,20 @@ Run:
 Run directly:
 
 ```bash
-mvn me.tamkungz:codetally-maven-plugin:1.0.0:count
+mvn me.tamkungz:codetally-maven-plugin:1.0.1:count
+```
+
+With options:
+
+```bash
+mvn me.tamkungz:codetally-maven-plugin:1.0.1:count ^
+  -Dcodetally.skipBlankLines=true ^
+  -Dcodetally.skipCommentLines=true ^
+  -Dcodetally.verbose=false ^
+  -Dcodetally.reportFormat=json ^
+  -Dcodetally.outputFile=target/codetally-report.json ^
+  -Dcodetally.maxLines=50000 ^
+  -Dcodetally.gitBlame=false
 ```
 
 Or configure in `pom.xml`:
@@ -58,7 +98,7 @@ Or configure in `pom.xml`:
 <plugin>
   <groupId>me.tamkungz</groupId>
   <artifactId>codetally-maven-plugin</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <executions>
     <execution>
       <goals>
@@ -68,6 +108,33 @@ Or configure in `pom.xml`:
   </executions>
 </plugin>
 ```
+
+Run automatically near the end of package/build lifecycle:
+
+```xml
+<plugin>
+  <groupId>me.tamkungz</groupId>
+  <artifactId>codetally-maven-plugin</artifactId>
+  <version>1.0.1</version>
+  <executions>
+    <execution>
+      <phase>package</phase>
+      <goals>
+        <goal>count</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+```
+
+---
+
+## CI features now available
+
+- Export CSV/JSON via output file + report format option
+- Threshold checks via `maxLines`
+- Git blame integration via `gitBlame`
+- Incremental/cached Gradle task via `@InputFiles` + `@OutputFile`
 
 ---
 

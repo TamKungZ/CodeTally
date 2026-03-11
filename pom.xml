@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.tamkungz</groupId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <!-- IMPORTANT: packaging must be maven-plugin -->
     <artifactId>codetally-maven-plugin</artifactId>
@@ -17,17 +17,18 @@
 
     <licenses>
         <license>
-            <name>MIT License</name>
-            <url>https://opensource.org/license/mit/</url>
+            <name>Apache License 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
 
     <developers>
         <developer>
-            <id>TamKungZ</id>
-            <name>TamKungZ</name>
-            <url>https://dev.tamkungz.me/</url>
+            <id>tamkungz</id>
+            <name>TamKungZ_</name>
+            <email>kittiwut.pimpromma@gmail.com</email>
+            <url>https://github.com/tamkungz</url>
         </developer>
     </developers>
 

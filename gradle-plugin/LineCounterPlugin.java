@@ -8,6 +8,11 @@ public class LineCounterPlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
         project.getTasks().register("countLines", CountLinesTask.class, task -> {
+            task.getSourceFiles().from(project.fileTree(new java.io.File(project.getProjectDir(), "src")));
+            task.getOutputFile().convention(project.getLayout().getBuildDirectory().file("reports/codetally/codetally-report.json"));
+            task.getReportFormat().convention("json");
+            task.getMaxLines().convention(0L);
+            task.getGitBlame().convention(false);
             task.getSkipBlankLines().convention(false);
             task.getSkipCommentLines().convention(false);
             task.getVerbose().convention(false);

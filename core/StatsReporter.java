@@ -34,6 +34,13 @@ public class StatsReporter {
                     + (skipComments ? "comment=" + s.getTotalComments()    : "")
                     + ")");
         }
+
+        if (!s.getAuthorLines().isEmpty()) {
+            log.accept("Top authors (git blame):");
+            for (Map.Entry<String, Long> e : s.getAuthorLines().entrySet()) {
+                log.accept(String.format("  %-30s %8d", e.getKey(), e.getValue()));
+            }
+        }
         log.accept("");
     }
 }

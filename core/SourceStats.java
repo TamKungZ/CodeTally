@@ -14,6 +14,8 @@ public class SourceStats {
 
     /** Per-extension breakdown: ext → long[]{files, lines, chars, blanks, comments} */
     private final Map<String, long[]> byExtension = new TreeMap<>();
+    /** Author line ownership from git blame: author → lines */
+    private final Map<String, Long> authorLines = new TreeMap<>();
 
     // ── Mutators used by SourceAnalyzer ─────────────────────────────────────
 
@@ -39,4 +41,10 @@ public class SourceStats {
     public long getTotalBlanks()   { return totalBlanks;   }
     public long getTotalComments() { return totalComments; }
     public Map<String, long[]> getByExtension() { return byExtension; }
+    public Map<String, Long> getAuthorLines() { return authorLines; }
+
+    public void addAuthorLines(String author, long lines) {
+        if (author == null || author.isBlank() || lines <= 0) return;
+        authorLines.merge(author, lines, Long::sum);
+    }
 }
