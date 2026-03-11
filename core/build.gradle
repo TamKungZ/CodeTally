@@ -1,0 +1,24 @@
+plugins {
+    id 'java-library'
+}
+
+description = 'Shared source analysis logic for CodeTally plugins'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['.']
+            include '**/*.java'
+            exclude 'build/**'
+        }
+        resources {
+            srcDirs = []
+        }
+    }
+    test {
+        java {
+            srcDirs = []
+        }
+    }
+}
+

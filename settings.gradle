@@ -1,0 +1,5 @@
+rootProject.name = 'codetally'
+
+include ':core'
+include ':gradle-plugin'
+// Maven plugin is built via Maven (pom.xml), not included here
