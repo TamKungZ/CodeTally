@@ -4,7 +4,10 @@ plugins {
     id 'com.gradle.plugin-publish' version '1.2.1'
 }
 
-description = 'Gradle plugin for CodeTally statistics reporting'
+group = rootProject.group
+version = rootProject.version
+
+description = 'CodeTally Gradle plugin for source code metrics (lines, characters, blank lines, and comment lines).'
 
 dependencies {
     implementation project(':core')
@@ -29,15 +32,15 @@ sourceSets {
 }
 
 gradlePlugin {
-    website = 'https://github.com/tamkungz/codetally'
-    vcsUrl = 'https://github.com/tamkungz/codetally.git'
+    website = 'https://dev.tamkungz.me/'
+    vcsUrl = 'https://github.com/tamkungz/CodeTally.git'
 
     plugins {
         lineCounter {
             id = 'me.tamkungz.codetally'
             implementationClass = 'me.tamkungz.codetally.LineCounterPlugin'
             displayName = 'CodeTally'
-            description = 'Count lines, characters, blank lines, and comment lines across source files.'
+            description = 'Analyze source files and report code metrics including lines, characters, blank lines, and comment lines.'
             tags = ['lines', 'metrics', 'stats', 'analysis']
         }
     }

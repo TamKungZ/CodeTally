@@ -15,7 +15,7 @@ import java.io.File;
  *   mvn codetally:count
  *
  * Or bind to a lifecycle phase in pom.xml:
- *   <executions><execution><goals><goal>count</goal></goals></execution></executions>
+ *   {@code <executions><execution><goals><goal>count</goal></goals></execution></executions>}
  */
 @Mojo(name = "count", defaultPhase = LifecyclePhase.VERIFY, threadSafe = true)
 public class CountLinesMojo extends AbstractMojo {

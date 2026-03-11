@@ -12,6 +12,30 @@
     <artifactId>codetally-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
     <name>CodeTally - Maven Plugin</name>
+    <description>CodeTally Maven plugin for source code metrics (lines, characters, blank lines, and comment lines).</description>
+    <url>https://dev.tamkungz.me/</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/license/mit/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>TamKungZ</id>
+            <name>TamKungZ</name>
+            <url>https://dev.tamkungz.me/</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/TamKungZ/CodeTally</url>
+        <connection>scm:git:https://github.com/TamKungZ/CodeTally.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/TamKungZ/CodeTally.git</developerConnection>
+    </scm>
 
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
@@ -70,6 +94,61 @@
                         <phase>process-classes</phase>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.8.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.7</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.6.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
+                </configuration>
             </plugin>
         </plugins>
     </build>
