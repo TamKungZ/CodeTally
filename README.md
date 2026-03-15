@@ -1,5 +1,9 @@
 # CodeTally
 
+[![MvnRepository](https://badges.mvnrepository.com/badge/me.tamkungz/codetally-maven-plugin/badge.svg?label=MvnRepository)](https://mvnrepository.com/artifact/me.tamkungz/codetally-maven-plugin)
+[![Gradle Plugin Portal](https://img.shields.io/gradle-plugin-portal/v/me.tamkungz.codetally?&color=72ada4)](https://plugins.gradle.org/plugin/me.tamkungz.codetally)
+[![License](https://img.shields.io/github/license/TamKungZ/CodeTally)](LICENSE)
+
 Code metrics plugin for both **Gradle** and **Maven**.
 
 - Website: https://dev.tamkungz.me/
@@ -35,7 +39,7 @@ Add plugin:
 
 ```gradle
 plugins {
-  id 'me.tamkungz.codetally' version '1.0.1'
+  id 'me.tamkungz.codetally' version '1.0.3'
 }
 ```
 
@@ -76,13 +80,13 @@ tasks.named('build') {
 Run directly:
 
 ```bash
-mvn me.tamkungz:codetally-maven-plugin:1.0.1:count
+mvn me.tamkungz:codetally-maven-plugin:1.0.3:count
 ```
 
 With options:
 
 ```bash
-mvn me.tamkungz:codetally-maven-plugin:1.0.1:count ^
+mvn me.tamkungz:codetally-maven-plugin:1.0.3:count ^
   -Dcodetally.skipBlankLines=true ^
   -Dcodetally.skipCommentLines=true ^
   -Dcodetally.verbose=false ^
