@@ -1,6 +1,7 @@
 package me.tamkungz.codetally;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -38,29 +39,57 @@ public class SourceAnalyzer {
      */
     public SourceStats analyze(File srcDir, java.util.function.Consumer<String> logger, boolean verbose)
             throws Exception {
+        List<File> files = collectAnalyzableFiles(srcDir);
+        return analyze(srcDir, files, logger, verbose);
+    }
+
+    /**
+     * Analyze a provided list of files. Useful when callers need to reuse the same file list
+     * (e.g. for git blame) without scanning the directory tree twice.
+     */
+    public SourceStats analyze(File srcDir, List<File> files,
+                               java.util.function.Consumer<String> logger, boolean verbose)
+            throws Exception {
 
         SourceStats stats = new SourceStats();
 
-        List<File> files = collectAnalyzableFiles(srcDir);
-        files.sort(Comparator.comparing(File::getAbsolutePath));
+        List<File> sortedFiles = new ArrayList<>(files);
+        sortedFiles.sort(Comparator.comparing(File::getAbsolutePath));
 
-        for (File file : files) {
+        for (File file : sortedFiles) {
             String ext = extension(file.getName());
 
-            List<String> lines = Files.readAllLines(file.toPath());
+            List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
 
             long fileLines = 0, fileChars = 0, fileBlanks = 0, fileComments = 0;
+            boolean inBlockComment = false;
 
             for (String line : lines) {
                 String trimmed = line.stripLeading();
 
                 boolean isBlank   = trimmed.isEmpty();
-                boolean isComment = !isBlank && (
-                        trimmed.startsWith("//") ||
-                                trimmed.startsWith("*")  ||
-                                trimmed.startsWith("/*") ||
-                                trimmed.startsWith("#")
-                );
+                boolean isComment = false;
+
+                if (!isBlank) {
+                    if (inBlockComment) {
+                        isComment = true;
+                        if (trimmed.contains("*/")) {
+                            inBlockComment = false;
+                        }
+                    } else if (trimmed.startsWith("//") || trimmed.startsWith("#")) {
+                        isComment = true;
+                    } else if (trimmed.startsWith("/*")) {
+                        isComment = true;
+                        if (!trimmed.contains("*/")) {
+                            inBlockComment = true;
+                        }
+                    } else if (trimmed.startsWith("*/") || trimmed.startsWith("*")) {
+                        isComment = true;
+                        if (trimmed.startsWith("*/")) {
+                            inBlockComment = false;
+                        }
+                    }
+                }
 
                 if (isBlank)   fileBlanks++;
                 if (isComment) fileComments++;

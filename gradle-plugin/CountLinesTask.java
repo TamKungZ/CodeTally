@@ -54,18 +54,19 @@ public abstract class CountLinesTask extends DefaultTask {
         File repoDir = getRepoDir().isPresent() ? getRepoDir().getAsFile().get() : src.getParentFile();
 
         SourceAnalyzer analyzer = new SourceAnalyzer(skipBlanks, skipComments);
-        SourceStats stats = analyzer.analyze(src, System.out::println, verbose);
+        java.util.List<File> analyzableFiles = analyzer.collectAnalyzableFiles(src);
+        SourceStats stats = analyzer.analyze(src, analyzableFiles, getLogger()::lifecycle, verbose);
 
         if (gitBlame) {
             GitBlameAnalyzer blameAnalyzer = new GitBlameAnalyzer();
-            for (File f : analyzer.collectAnalyzableFiles(src)) {
+            for (File f : analyzableFiles) {
                 for (Map.Entry<String, Long> e : blameAnalyzer.analyze(repoDir, f).entrySet()) {
                     stats.addAuthorLines(e.getKey(), e.getValue());
                 }
             }
         }
 
-        StatsReporter.print(stats, skipBlanks, skipComments, System.out::println);
+        StatsReporter.print(stats, skipBlanks, skipComments, getLogger()::lifecycle);
 
         File reportOutput = getOutputFile().isPresent() ? getOutputFile().get().getAsFile() : null;
         if (reportOutput != null) {

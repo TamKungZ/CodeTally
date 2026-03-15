@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.tamkungz</groupId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 
     <!-- IMPORTANT: packaging must be maven-plugin -->
     <artifactId>codetally-maven-plugin</artifactId>

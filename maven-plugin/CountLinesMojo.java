@@ -65,11 +65,12 @@ public class CountLinesMojo extends AbstractMojo {
             java.util.function.Consumer<String> log = line -> getLog().info(line);
 
             SourceAnalyzer analyzer = new SourceAnalyzer(skipBlankLines, skipCommentLines);
-            SourceStats stats = analyzer.analyze(src, log, verbose);
+            java.util.List<File> analyzableFiles = analyzer.collectAnalyzableFiles(src);
+            SourceStats stats = analyzer.analyze(src, analyzableFiles, log, verbose);
 
             if (gitBlame) {
                 GitBlameAnalyzer blameAnalyzer = new GitBlameAnalyzer();
-                for (File f : analyzer.collectAnalyzableFiles(src)) {
+                for (File f : analyzableFiles) {
                     for (java.util.Map.Entry<String, Long> e : blameAnalyzer.analyze(baseDir, f).entrySet()) {
                         stats.addAuthorLines(e.getKey(), e.getValue());
                     }

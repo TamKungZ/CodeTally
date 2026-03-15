@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4]
+
+### Changed
+- Project version bumped from `1.0.3` to `1.0.4` in [`build.gradle`](build.gradle) and [`pom.xml`](pom.xml).
+- Documentation examples updated to `1.0.4` in [`README.md`](README.md).
+- Source reading now uses UTF-8 explicitly in [`core/SourceAnalyzer.java`](core/SourceAnalyzer.java).
+- Improved multi-line block comment detection in [`core/SourceAnalyzer.java`](core/SourceAnalyzer.java).
+- Console table now includes `Comment` column in [`core/StatsReporter.java`](core/StatsReporter.java).
+- Gradle task logging now uses lifecycle logger in [`gradle-plugin/CountLinesTask.java`](gradle-plugin/CountLinesTask.java).
+- Reused analyzable file list to avoid duplicate scans in [`gradle-plugin/CountLinesTask.java`](gradle-plugin/CountLinesTask.java) and [`maven-plugin/CountLinesMojo.java`](maven-plugin/CountLinesMojo.java).
+
 ## [1.0.3]
 
 ### Changed

@@ -39,7 +39,7 @@ Add plugin:
 
 ```gradle
 plugins {
-  id 'me.tamkungz.codetally' version '1.0.3'
+  id 'me.tamkungz.codetally' version '1.0.4'
 }
 ```
 
@@ -80,13 +80,13 @@ tasks.named('build') {
 Run directly:
 
 ```bash
-mvn me.tamkungz:codetally-maven-plugin:1.0.3:count
+mvn me.tamkungz:codetally-maven-plugin:1.0.4:count
 ```
 
 With options:
 
 ```bash
-mvn me.tamkungz:codetally-maven-plugin:1.0.3:count ^
+mvn me.tamkungz:codetally-maven-plugin:1.0.4:count ^
   -Dcodetally.skipBlankLines=true ^
   -Dcodetally.skipCommentLines=true ^
   -Dcodetally.verbose=false ^
@@ -102,7 +102,7 @@ Or configure in `pom.xml`:
 <plugin>
   <groupId>me.tamkungz</groupId>
   <artifactId>codetally-maven-plugin</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <executions>
     <execution>
       <goals>
@@ -119,7 +119,7 @@ Run automatically near the end of package/build lifecycle:
 <plugin>
   <groupId>me.tamkungz</groupId>
   <artifactId>codetally-maven-plugin</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <executions>
     <execution>
       <phase>package</phase>
