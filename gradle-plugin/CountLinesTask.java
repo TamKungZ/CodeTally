@@ -5,11 +5,12 @@ import java.util.Map;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
-import org.gradle.api.file.ConfigurableFileCollection;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
@@ -18,9 +19,12 @@ import org.gradle.api.tasks.TaskAction;
 
 public abstract class CountLinesTask extends DefaultTask {
 
-    @InputFiles
+    @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
-    public abstract ConfigurableFileCollection getSourceFiles();
+    public abstract DirectoryProperty getSourceDir();
+
+    @Internal
+    public abstract DirectoryProperty getRepoDir();
 
     @OutputFile @Optional
     public abstract RegularFileProperty getOutputFile();
@@ -41,11 +45,13 @@ public abstract class CountLinesTask extends DefaultTask {
         long maxLines        = getMaxLines().getOrElse(0L);
         String reportFormat  = getReportFormat().getOrElse("json");
 
-        File src = new File(getProject().getProjectDir(), "src");
+        File src = getSourceDir().getAsFile().get();
         if (!src.exists()) {
             getLogger().warn("CodeTally: src/ directory not found at " + src.getAbsolutePath());
             return;
         }
+
+        File repoDir = getRepoDir().isPresent() ? getRepoDir().getAsFile().get() : src.getParentFile();
 
         SourceAnalyzer analyzer = new SourceAnalyzer(skipBlanks, skipComments);
         SourceStats stats = analyzer.analyze(src, System.out::println, verbose);
@@ -53,7 +59,7 @@ public abstract class CountLinesTask extends DefaultTask {
         if (gitBlame) {
             GitBlameAnalyzer blameAnalyzer = new GitBlameAnalyzer();
             for (File f : analyzer.collectAnalyzableFiles(src)) {
-                for (Map.Entry<String, Long> e : blameAnalyzer.analyze(getProject().getProjectDir(), f).entrySet()) {
+                for (Map.Entry<String, Long> e : blameAnalyzer.analyze(repoDir, f).entrySet()) {
                     stats.addAuthorLines(e.getKey(), e.getValue());
                 }
             }

@@ -10,7 +10,14 @@ version = rootProject.version
 description = 'CodeTally Gradle plugin for source code metrics (lines, characters, blank lines, and comment lines).'
 
 dependencies {
-    implementation project(':core')
+    // Compile against core, but package core classes directly into this plugin JAR.
+    // This avoids publishing core as an external runtime dependency.
+    compileOnly project(':core')
+}
+
+tasks.named('jar') {
+    dependsOn project(':core').tasks.named('classes')
+    from(project(':core').sourceSets.main.output)
 }
 
 sourceSets {

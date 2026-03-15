@@ -1,7 +1,7 @@
-group = 'me.tamkungz'
-version = '1.0.1'
-
 allprojects {
+    group = 'me.tamkungz'
+    version = '1.0.3'
+
     repositories {
         mavenCentral()
         gradlePluginPortal()

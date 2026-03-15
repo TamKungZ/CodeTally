@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3]
+
+### Changed
+- Project version bumped from `1.0.2` to `1.0.3` in [`build.gradle`](build.gradle) and [`pom.xml`](pom.xml).
+- Documentation examples updated to `1.0.3` in [`README.md`](README.md).
+- Console table rendering changed to ASCII in [`core/StatsReporter.java`](core/StatsReporter.java) for cross-platform compatibility.
+
+## [1.0.2]
+
+### Changed
+- Project version bumped from `1.0.1` to `1.0.2` in [`build.gradle`](build.gradle) and [`pom.xml`](pom.xml).
+- Documentation examples updated to `1.0.2` in [`README.md`](README.md).
+
 ## [1.0.1]
 
 ### Added

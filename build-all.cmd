@@ -95,14 +95,14 @@ goto :finish
 call :ensureMaven
 if errorlevel 1 goto :fail
 
-if not defined MAVEN_ALT_DEPLOY_REPO (
-  echo [ERROR] Maven deploy skipped. Set MAVEN_ALT_DEPLOY_REPO first.
-  set "EXIT_CODE=1"
-  goto :finish
-)
-
 echo [INFO] Deploy Maven plugin (Maven only)
-call "%MAVEN_RUN%" -f pom.xml clean deploy -DaltDeploymentRepository=%MAVEN_ALT_DEPLOY_REPO%
+if defined MAVEN_ALT_DEPLOY_REPO (
+  echo [INFO] Using MAVEN_ALT_DEPLOY_REPO=%MAVEN_ALT_DEPLOY_REPO%
+  call "%MAVEN_RUN%" -f pom.xml clean deploy -DaltDeploymentRepository=%MAVEN_ALT_DEPLOY_REPO%
+) else (
+  echo [INFO] MAVEN_ALT_DEPLOY_REPO not set, using pom.xml distribution/publishing configuration
+  call "%MAVEN_RUN%" -f pom.xml clean deploy
+)
 if errorlevel 1 goto :fail
 goto :finish
 

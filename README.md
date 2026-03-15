@@ -98,7 +98,7 @@ Or configure in `pom.xml`:
 <plugin>
   <groupId>me.tamkungz</groupId>
   <artifactId>codetally-maven-plugin</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.3</version>
   <executions>
     <execution>
       <goals>
@@ -115,7 +115,7 @@ Run automatically near the end of package/build lifecycle:
 <plugin>
   <groupId>me.tamkungz</groupId>
   <artifactId>codetally-maven-plugin</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.3</version>
   <executions>
     <execution>
       <phase>package</phase>
